@@ -24,11 +24,11 @@
 				<thead>
 					<tr>
 					
+						<th><g:message code="emailAddress.person.label" default="Person" /></th>
+					
 						<g:sortableColumn property="title" title="${message(code: 'emailAddress.title.label', default: 'Title')}" />
 					
 						<g:sortableColumn property="emailAddress" title="${message(code: 'emailAddress.emailAddress.label', default: 'Email Address')}" />
-					
-						<th><g:message code="emailAddress.person.label" default="Person" /></th>
 					
 					</tr>
 				</thead>
@@ -36,11 +36,11 @@
 				<g:each in="${emailAddressInstanceList}" status="i" var="emailAddressInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${emailAddressInstance.id}">${fieldValue(bean: emailAddressInstance, field: "title")}</g:link></td>
+						<td><g:link action="show" id="${emailAddressInstance.id}">${fieldValue(bean: emailAddressInstance, field: "person")}</g:link></td>
+					
+						<td>${fieldValue(bean: emailAddressInstance, field: "title")}</td>
 					
 						<td>${fieldValue(bean: emailAddressInstance, field: "emailAddress")}</td>
-					
-						<td>${fieldValue(bean: emailAddressInstance, field: "person")}</td>
 					
 					</tr>
 				</g:each>

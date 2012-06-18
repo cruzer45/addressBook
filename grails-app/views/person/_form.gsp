@@ -18,6 +18,14 @@
 	<g:textField name="lastName" required="" value="${personInstance?.lastName}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: personInstance, field: 'picture', 'error')} ">
+	<label for="picture">
+		<g:message code="person.picture.label" default="Picture" />
+		
+	</label>
+	<input type="file" id="picture" name="picture" />
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: personInstance, field: 'phones', 'error')} ">
 	<label for="phones">
 		<g:message code="person.phones.label" default="Phones" />
@@ -69,6 +77,23 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: personInstance, field: 'organizations', 'error')} ">
+	<label for="organizations">
+		<g:message code="person.organizations.label" default="Organizations" />
+		
+	</label>
+	
+<ul class="one-to-many">
+<g:each in="${personInstance?.organizations?}" var="o">
+    <li><g:link controller="organization" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="organization" action="create" params="['person.id': personInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'organization.label', default: 'Organization')])}</g:link>
+</li>
+</ul>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: personInstance, field: 'notes', 'error')} ">
 	<label for="notes">
 		<g:message code="person.notes.label" default="Notes" />
@@ -85,20 +110,11 @@
 	<g:textField name="nickName" value="${personInstance?.nickName}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: personInstance, field: 'organizations', 'error')} ">
-	<label for="organizations">
-		<g:message code="person.organizations.label" default="Organizations" />
-		
+<div class="fieldcontain ${hasErrors(bean: personInstance, field: 'user', 'error')} required">
+	<label for="user">
+		<g:message code="person.user.label" default="User" />
+		<span class="required-indicator">*</span>
 	</label>
-	
-<ul class="one-to-many">
-<g:each in="${personInstance?.organizations?}" var="o">
-    <li><g:link controller="organization" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="organization" action="create" params="['person.id': personInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'organization.label', default: 'Organization')])}</g:link>
-</li>
-</ul>
-
+	<g:select id="user" name="user.id" from="${addressBook.security.User.list()}" optionKey="id" required="" value="${personInstance?.user?.id}" class="many-to-one"/>
 </div>
 

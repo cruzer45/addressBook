@@ -28,6 +28,10 @@
 					
 						<g:sortableColumn property="lastName" title="${message(code: 'person.lastName.label', default: 'Last Name')}" />
 					
+						<g:sortableColumn property="picture" title="${message(code: 'person.picture.label', default: 'Picture')}" />
+					
+						<g:sortableColumn property="pictureType" title="${message(code: 'person.pictureType.label', default: 'Picture Type')}" />
+					
 						<g:sortableColumn property="notes" title="${message(code: 'person.notes.label', default: 'Notes')}" />
 					
 						<g:sortableColumn property="nickName" title="${message(code: 'person.nickName.label', default: 'Nick Name')}" />
@@ -41,6 +45,10 @@
 						<td><g:link action="show" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "firstName")}</g:link></td>
 					
 						<td>${fieldValue(bean: personInstance, field: "lastName")}</td>
+					
+						<td>${fieldValue(bean: personInstance, field: "picture")}</td>
+					
+						<td>${fieldValue(bean: personInstance, field: "pictureType")}</td>
 					
 						<td>${fieldValue(bean: personInstance, field: "notes")}</td>
 					

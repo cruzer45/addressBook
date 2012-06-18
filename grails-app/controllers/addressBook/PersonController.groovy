@@ -1,103 +1,163 @@
 package addressBook
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.SpringSecurityService
 
-class PersonController {
+class PersonController
+{
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index() {
-        redirect(action: "list", params: params)
-    }
+	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	def springSecurityService
 
-    def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [personInstanceList: Person.list(params), personInstanceTotal: Person.count()]
-    }
+	def index()
+	{
 
-    def create() {
-        [personInstance: new Person(params)]
-    }
+		if (! springSecurityService.isLoggedIn())
+		{
+			redirect (uri:"/login")
+			return
+		}
+		redirect(action: "list", params: params)
+	}
 
-    def save() {
-        def personInstance = new Person(params)
-        if (!personInstance.save(flush: true)) {
-            render(view: "create", model: [personInstance: personInstance])
-            return
-        }
+	def list()
+	{
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])
-        redirect(action: "show", id: personInstance.id)
-    }
+		if (! springSecurityService.isLoggedIn())
+		{
+			redirect (uri:"/login")
+			return
+		}
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		[personInstanceList: Person.list(params), personInstanceTotal: Person.count()]
+	}
 
-    def show() {
-        def personInstance = Person.get(params.id)
-        if (!personInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Person'), params.id])
-            redirect(action: "list")
-            return
-        }
+	def create()
+	{
+		[personInstance: new Person(params)]
+	}
 
-        [personInstance: personInstance]
-    }
+	def save()
+	{
+		def personInstance = new Person(params)
+		if (!personInstance.save(flush: true))
+		{
+			render(view: "create", model: [personInstance: personInstance])
+			return
+		}
 
-    def edit() {
-        def personInstance = Person.get(params.id)
-        if (!personInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Person'), params.id])
-            redirect(action: "list")
-            return
-        }
+		flash.message = message(code: 'default.created.message', args: [
+			message(code: 'person.label', default: 'Person'),
+			personInstance.id
+		])
+		redirect(action: "show", id: personInstance.id)
+	}
 
-        [personInstance: personInstance]
-    }
+	def show()
+	{
+		def personInstance = Person.get(params.id)
+		if (!personInstance)
+		{
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'person.label', default: 'Person'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
 
-    def update() {
-        def personInstance = Person.get(params.id)
-        if (!personInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Person'), params.id])
-            redirect(action: "list")
-            return
-        }
+		[personInstance: personInstance]
+	}
 
-        if (params.version) {
-            def version = params.version.toLong()
-            if (personInstance.version > version) {
-                personInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'person.label', default: 'Person')] as Object[],
-                          "Another user has updated this Person while you were editing")
-                render(view: "edit", model: [personInstance: personInstance])
-                return
-            }
-        }
+	def edit()
+	{
+		def personInstance = Person.get(params.id)
+		if (!personInstance)
+		{
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'person.label', default: 'Person'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
 
-        personInstance.properties = params
+		[personInstance: personInstance]
+	}
 
-        if (!personInstance.save(flush: true)) {
-            render(view: "edit", model: [personInstance: personInstance])
-            return
-        }
+	def update()
+	{
+		def personInstance = Person.get(params.id)
+		if (!personInstance)
+		{
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'person.label', default: 'Person'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])
-        redirect(action: "show", id: personInstance.id)
-    }
+		if (params.version)
+		{
+			def version = params.version.toLong()
+			if (personInstance.version > version)
+			{
+				personInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+						[
+							message(code: 'person.label', default: 'Person')]
+						as Object[],
+						"Another user has updated this Person while you were editing")
+				render(view: "edit", model: [personInstance: personInstance])
+				return
+			}
+		}
 
-    def delete() {
-        def personInstance = Person.get(params.id)
-        if (!personInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Person'), params.id])
-            redirect(action: "list")
-            return
-        }
+		personInstance.properties = params
 
-        try {
-            personInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'person.label', default: 'Person'), params.id])
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'person.label', default: 'Person'), params.id])
-            redirect(action: "show", id: params.id)
-        }
-    }
+		if (!personInstance.save(flush: true))
+		{
+			render(view: "edit", model: [personInstance: personInstance])
+			return
+		}
+
+		flash.message = message(code: 'default.updated.message', args: [
+			message(code: 'person.label', default: 'Person'),
+			personInstance.id
+		])
+		redirect(action: "show", id: personInstance.id)
+	}
+
+	def delete()
+	{
+		def personInstance = Person.get(params.id)
+		if (!personInstance)
+		{
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'person.label', default: 'Person'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
+
+		try
+		{
+			personInstance.delete(flush: true)
+			flash.message = message(code: 'default.deleted.message', args: [
+				message(code: 'person.label', default: 'Person'),
+				params.id
+			])
+			redirect(action: "list")
+		}
+		catch (DataIntegrityViolationException e)
+		{
+			flash.message = message(code: 'default.not.deleted.message', args: [
+				message(code: 'person.label', default: 'Person'),
+				params.id
+			])
+			redirect(action: "show", id: params.id)
+		}
+	}
 }

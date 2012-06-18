@@ -12,6 +12,7 @@ class Address {
 	String country
 
 	static constraints = {
+		person(editable:false)
 		title(blank:false)
 		street(blank:false)
 		city()

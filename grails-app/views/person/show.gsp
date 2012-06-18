@@ -41,6 +41,22 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${personInstance?.picture}">
+				<li class="fieldcontain">
+					<span id="picture-label" class="property-label"><g:message code="person.picture.label" default="Picture" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${personInstance?.pictureType}">
+				<li class="fieldcontain">
+					<span id="pictureType-label" class="property-label"><g:message code="person.pictureType.label" default="Picture Type" /></span>
+					
+						<span class="property-value" aria-labelledby="pictureType-label"><g:fieldValue bean="${personInstance}" field="pictureType"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${personInstance?.phones}">
 				<li class="fieldcontain">
 					<span id="phones-label" class="property-label"><g:message code="person.phones.label" default="Phones" /></span>
@@ -74,6 +90,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${personInstance?.organizations}">
+				<li class="fieldcontain">
+					<span id="organizations-label" class="property-label"><g:message code="person.organizations.label" default="Organizations" /></span>
+					
+						<g:each in="${personInstance.organizations}" var="o">
+						<span class="property-value" aria-labelledby="organizations-label"><g:link controller="organization" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${personInstance?.notes}">
 				<li class="fieldcontain">
 					<span id="notes-label" class="property-label"><g:message code="person.notes.label" default="Notes" /></span>
@@ -92,13 +119,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${personInstance?.organizations}">
+				<g:if test="${personInstance?.user}">
 				<li class="fieldcontain">
-					<span id="organizations-label" class="property-label"><g:message code="person.organizations.label" default="Organizations" /></span>
+					<span id="user-label" class="property-label"><g:message code="person.user.label" default="User" /></span>
 					
-						<g:each in="${personInstance.organizations}" var="o">
-						<span class="property-value" aria-labelledby="organizations-label"><g:link controller="organization" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link></span>
-						</g:each>
+						<span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${personInstance?.user?.id}">${personInstance?.user?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

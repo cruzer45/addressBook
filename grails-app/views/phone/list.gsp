@@ -24,11 +24,11 @@
 				<thead>
 					<tr>
 					
+						<th><g:message code="phone.person.label" default="Person" /></th>
+					
 						<g:sortableColumn property="title" title="${message(code: 'phone.title.label', default: 'Title')}" />
 					
 						<g:sortableColumn property="number" title="${message(code: 'phone.number.label', default: 'Number')}" />
-					
-						<th><g:message code="phone.person.label" default="Person" /></th>
 					
 					</tr>
 				</thead>
@@ -36,11 +36,11 @@
 				<g:each in="${phoneInstanceList}" status="i" var="phoneInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${phoneInstance.id}">${fieldValue(bean: phoneInstance, field: "title")}</g:link></td>
+						<td><g:link action="show" id="${phoneInstance.id}">${fieldValue(bean: phoneInstance, field: "person")}</g:link></td>
+					
+						<td>${fieldValue(bean: phoneInstance, field: "title")}</td>
 					
 						<td>${fieldValue(bean: phoneInstance, field: "number")}</td>
-					
-						<td>${fieldValue(bean: phoneInstance, field: "person")}</td>
 					
 					</tr>
 				</g:each>

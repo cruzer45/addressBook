@@ -23,6 +23,15 @@
 			</g:if>
 			<ol class="property-list emailAddress">
 			
+				<g:if test="${emailAddressInstance?.person}">
+				<li class="fieldcontain">
+					<span id="person-label" class="property-label"><g:message code="emailAddress.person.label" default="Person" /></span>
+					
+						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${emailAddressInstance?.person?.id}">${emailAddressInstance?.person?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${emailAddressInstance?.title}">
 				<li class="fieldcontain">
 					<span id="title-label" class="property-label"><g:message code="emailAddress.title.label" default="Title" /></span>
@@ -37,15 +46,6 @@
 					<span id="emailAddress-label" class="property-label"><g:message code="emailAddress.emailAddress.label" default="Email Address" /></span>
 					
 						<span class="property-value" aria-labelledby="emailAddress-label"><g:fieldValue bean="${emailAddressInstance}" field="emailAddress"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${emailAddressInstance?.person}">
-				<li class="fieldcontain">
-					<span id="person-label" class="property-label"><g:message code="emailAddress.person.label" default="Person" /></span>
-					
-						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${emailAddressInstance?.person?.id}">${emailAddressInstance?.person?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

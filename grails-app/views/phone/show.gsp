@@ -23,6 +23,15 @@
 			</g:if>
 			<ol class="property-list phone">
 			
+				<g:if test="${phoneInstance?.person}">
+				<li class="fieldcontain">
+					<span id="person-label" class="property-label"><g:message code="phone.person.label" default="Person" /></span>
+					
+						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${phoneInstance?.person?.id}">${phoneInstance?.person?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${phoneInstance?.title}">
 				<li class="fieldcontain">
 					<span id="title-label" class="property-label"><g:message code="phone.title.label" default="Title" /></span>
@@ -37,15 +46,6 @@
 					<span id="number-label" class="property-label"><g:message code="phone.number.label" default="Number" /></span>
 					
 						<span class="property-value" aria-labelledby="number-label"><g:fieldValue bean="${phoneInstance}" field="number"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${phoneInstance?.person}">
-				<li class="fieldcontain">
-					<span id="person-label" class="property-label"><g:message code="phone.person.label" default="Person" /></span>
-					
-						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${phoneInstance?.person?.id}">${phoneInstance?.person?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

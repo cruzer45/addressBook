@@ -24,6 +24,8 @@
 				<thead>
 					<tr>
 					
+						<th><g:message code="address.person.label" default="Person" /></th>
+					
 						<g:sortableColumn property="title" title="${message(code: 'address.title.label', default: 'Title')}" />
 					
 						<g:sortableColumn property="street" title="${message(code: 'address.street.label', default: 'Street')}" />
@@ -34,15 +36,15 @@
 					
 						<g:sortableColumn property="zip" title="${message(code: 'address.zip.label', default: 'Zip')}" />
 					
-						<g:sortableColumn property="country" title="${message(code: 'address.country.label', default: 'Country')}" />
-					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${addressInstanceList}" status="i" var="addressInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${addressInstance.id}">${fieldValue(bean: addressInstance, field: "title")}</g:link></td>
+						<td><g:link action="show" id="${addressInstance.id}">${fieldValue(bean: addressInstance, field: "person")}</g:link></td>
+					
+						<td>${fieldValue(bean: addressInstance, field: "title")}</td>
 					
 						<td>${fieldValue(bean: addressInstance, field: "street")}</td>
 					
@@ -51,8 +53,6 @@
 						<td>${fieldValue(bean: addressInstance, field: "state")}</td>
 					
 						<td>${fieldValue(bean: addressInstance, field: "zip")}</td>
-					
-						<td>${fieldValue(bean: addressInstance, field: "country")}</td>
 					
 					</tr>
 				</g:each>

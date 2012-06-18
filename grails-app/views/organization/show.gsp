@@ -23,6 +23,15 @@
 			</g:if>
 			<ol class="property-list organization">
 			
+				<g:if test="${organizationInstance?.person}">
+				<li class="fieldcontain">
+					<span id="person-label" class="property-label"><g:message code="organization.person.label" default="Person" /></span>
+					
+						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${organizationInstance?.person?.id}">${organizationInstance?.person?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${organizationInstance?.title}">
 				<li class="fieldcontain">
 					<span id="title-label" class="property-label"><g:message code="organization.title.label" default="Title" /></span>
@@ -37,15 +46,6 @@
 					<span id="company-label" class="property-label"><g:message code="organization.company.label" default="Company" /></span>
 					
 						<span class="property-value" aria-labelledby="company-label"><g:fieldValue bean="${organizationInstance}" field="company"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${organizationInstance?.person}">
-				<li class="fieldcontain">
-					<span id="person-label" class="property-label"><g:message code="organization.person.label" default="Person" /></span>
-					
-						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${organizationInstance?.person?.id}">${organizationInstance?.person?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

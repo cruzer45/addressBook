@@ -8,6 +8,7 @@ class Organization {
 	String company
 
 	static constraints = {
+		person(editable:false)
 		title(blank:false)
 		company()
 	}

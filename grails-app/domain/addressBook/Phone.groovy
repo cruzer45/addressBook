@@ -1,18 +1,28 @@
 package addressBook
 
-class Phone {
+class Phone
+{
 
 	static belongsTo = [person:Person]
 
 	String title
 	String number
 
-	static constraints = {
+	static constraints =
+	{
+		person(editable:false)
 		title(Blank:false)
 		number()
 	}
 
-	String toString() {
-		return title
+	String toString()
+	{
+		return title + ": " + number
+	}
+
+	def beforeValidate()
+	{
+		title = title?.trim()?.capitalize()
+		number = number?.trim()
 	}
 }

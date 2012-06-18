@@ -2,6 +2,14 @@
 
 
 
+<div class="fieldcontain ${hasErrors(bean: addressInstance, field: 'person', 'error')} required">
+	<label for="person">
+		<g:message code="address.person.label" default="Person" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="person" name="person.id" from="${addressBook.Person.list()}" optionKey="id" required="" value="${addressInstance?.person?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: addressInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="address.title.label" default="Title" />
@@ -48,13 +56,5 @@
 		
 	</label>
 	<g:textField name="country" value="${addressInstance?.country}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: addressInstance, field: 'person', 'error')} required">
-	<label for="person">
-		<g:message code="address.person.label" default="Person" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="person" name="person.id" from="${addressBook.Person.list()}" optionKey="id" required="" value="${addressInstance?.person?.id}" class="many-to-one"/>
 </div>
 

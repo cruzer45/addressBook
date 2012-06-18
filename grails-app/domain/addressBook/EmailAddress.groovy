@@ -8,6 +8,7 @@ class EmailAddress {
 	String emailAddress
 
 	static constraints = {
+		person(editable:false)
 		title(blank:false)
 		emailAddress(email:true)
 	}
