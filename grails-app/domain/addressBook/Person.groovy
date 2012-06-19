@@ -10,6 +10,7 @@ class Person
 
 	static belongsTo = [user:User]
 	
+	User user
 	String firstName
 	String lastName
 	String notes

@@ -1,6 +1,6 @@
 dataSource {
     pooled = true
-    driverClassName = "org.h2.Driver"
+    driverClassName = "com.mysql.jdbc.Driver"
     username = "addressBook"
     password = "p@55wrd"
 }
